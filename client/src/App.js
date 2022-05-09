@@ -3,8 +3,9 @@ import BidderContract from "./contracts/Bidder.json";
 import getWeb3 from "./getWeb3";
 import { each } from 'lodash';
 import { PRODUCTS } from './constants';
+import Product from './components/Product';
 
-import "./App.css";
+import './tailwind.css';
 
 class App extends Component {
   state = { storageValue: 0, web3: null, accounts: null, contract: null };
@@ -61,17 +62,15 @@ class App extends Component {
     }
     return (
       <div className="App">
-        <h1>Good to Go!</h1>
-        <p>Your Truffle Box is installed and ready.</p>
-        <h2>Smart Contract Example</h2>
-        <p>
-          If your contracts compiled and migrated successfully, below will show
-          a stored value of 5 (by default).
-        </p>
-        <p>
-          Try changing the value stored on <strong>line 42</strong> of App.js.
-        </p>
-        <div>The stored value is: {this.state.storageValue}</div>
+        <h1>Bid For Me</h1>
+        <div>Total no. of products: {this.state.storageValue}</div>
+          <section class="relative py-16 bg-blueGray-50">
+              <div className="block w-200 overflow-x-auto">
+                {PRODUCTS.map((prod, idx) => {
+                  return <Product key={idx} image={prod.image} name={prod.name} price={prod.value} />;
+                })}
+              </div>
+        </section>
       </div>
     );
   }
