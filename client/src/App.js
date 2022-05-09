@@ -64,12 +64,22 @@ class App extends Component {
       <div className="App">
         <h1>Bid For Me</h1>
         <div>Total no. of products: {this.state.storageValue}</div>
-          <section class="relative py-16 bg-blueGray-50">
-              <div className="block w-200 overflow-x-auto">
-                {PRODUCTS.map((prod, idx) => {
-                  return <Product key={idx} image={prod.image} name={prod.name} price={prod.value} />;
-                })}
+          <section>
+          <div className="flex flex-col">
+            <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+              <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+                <div className="overflow-hidden">
+                <table className="table-auto min-w-full border text-center border">
+                  <tbody>
+                    {PRODUCTS.map((prod, idx) => {
+                      return <Product key={idx} image={prod.image} name={prod.name} price={prod.value} id={prod.id} onBid={(id) => this.onBid(id)} />;
+                    })}
+                  </tbody>
+                  </table>
+                </div>
               </div>
+            </div>
+          </div>
         </section>
       </div>
     );

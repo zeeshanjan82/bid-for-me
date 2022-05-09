@@ -2,22 +2,18 @@ import React, { Suspense } from 'react';
 
 const Product = props => {
 
-    const { name, image, price } = props;
+    const { name, image, price, id, onBid } = props;
 
     return (
         <Suspense fallback={<div>Loading...</div>}>
-            <table className="items-center bg-transparent border-collapse">
-            <tbody>
-              <tr>
-                  <td className="border-t-0 px-6 w-50 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
-                    <img src={image} className="h-12 w-20 bg-white rounded-full border" alt="..." />
-                  </td>
-                  <td className="border-t-0 px-6 w-100 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                  <i className="fas fa-circle text-orange-500 mr-2"></i>{name}</td>     
-                <td className="border-t-0 px-6 w-50 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">{price} ETH</td>           
-              </tr>            
-            </tbody>
-          </table>
+            <tr>
+                <td className="border-r"><img src={image} className="object-cover w-36" alt={name} /></td>
+                <td className="text-center border-r">{name}</td>
+                <td className="text-center border-r">{price} ETH</td>
+                <td className="text-center border-r">
+                    <button className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" onClick={() => onBid(id)}>Bid</button>
+                </td>
+            </tr>
         </Suspense>
     );
 }
