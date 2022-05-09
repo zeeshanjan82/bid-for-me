@@ -64,6 +64,9 @@ class App extends Component {
       <div className="App">
         <h1>Bid For Me</h1>
         <div>Total no. of products: {this.state.storageValue}</div>
+        {window.web3 && this.state.accounts && this.state.accounts.length > 0 ? <div className="text-green-600">Account No: {this.state.accounts[0]}</div> : <div className="text-red-600">Connected to local provider.</div>}
+        <div>
+        </div>
           <section>
           <div className="flex flex-col">
             <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
