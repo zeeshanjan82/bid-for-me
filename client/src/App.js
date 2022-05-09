@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import BidderContract from "./contracts/Bidder.json";
+//import BidderContract from "./contracts/Bidder.json";
 import getWeb3 from "./getWeb3";
 import { each } from 'lodash';
 import { PRODUCTS } from './constants';
 import Product from './components/Product';
-
+import { createContract  } from "./ethereum/bidderContract";
 import './tailwind.css';
 
 class App extends Component {
@@ -19,12 +19,13 @@ class App extends Component {
       const accounts = await web3.eth.getAccounts();
 
       // Get the contract instance.
-      const networkId = await web3.eth.net.getId();
-      const deployedNetwork = BidderContract.networks[networkId];
-      const instance = new web3.eth.Contract(
+      //const networkId = await web3.eth.net.getId();
+      const instance = createContract("0xcA336613f15Ee4CEE3AA52DeefF60B25be81d133");
+      //const deployedNetwork = BidderContract.networks[networkId];
+      /*const instance = new web3.eth.Contract(
         BidderContract.abi,
         deployedNetwork && deployedNetwork.address,
-      );
+      );*/
 
       // Set web3, accounts, and contract to the state, and then proceed with an
       // example of interacting with the contract's methods.
