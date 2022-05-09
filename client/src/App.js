@@ -1,6 +1,8 @@
 import React, { Component } from "react";
-import SimpleStorageContract from "./contracts/SimpleStorage.json";
+import BidderContract from "./contracts/Bidder.json";
 import getWeb3 from "./getWeb3";
+import { each } from 'lodash';
+import { PRODUCTS } from './constants';
 
 import "./App.css";
 
@@ -17,9 +19,9 @@ class App extends Component {
 
       // Get the contract instance.
       const networkId = await web3.eth.net.getId();
-      const deployedNetwork = SimpleStorageContract.networks[networkId];
+      const deployedNetwork = BidderContract.networks[networkId];
       const instance = new web3.eth.Contract(
-        SimpleStorageContract.abi,
+        BidderContract.abi,
         deployedNetwork && deployedNetwork.address,
       );
 
@@ -38,11 +40,16 @@ class App extends Component {
   runExample = async () => {
     const { accounts, contract } = this.state;
 
-    // Stores a given value, 5 by default.
-    await contract.methods.set(5).send({ from: accounts[0] });
+    each(PRODUCTS, async prod => {
+      if(!await contract.methods.getOption(prod.name).call()) {
+        await contract.methods.addOption(prod.name).send({ from: accounts[0] });
+      }
+    }); 
 
     // Get the value from the contract to prove it worked.
-    const response = await contract.methods.get().call();
+    const response = await contract.methods.getOptionsCount().call();
+
+    console.log(response);
 
     // Update state with the result.
     this.setState({ storageValue: response });

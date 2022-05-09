@@ -19,6 +19,19 @@ contract Bidder {
         options.push(option);
     }
 
+    function getOption(string memory option) public view returns (bool) {
+        for(uint i; i < options.length; i++) {
+            if(keccak256(abi.encodePacked(options[i])) == keccak256(abi.encodePacked(option))) {
+                return true;
+            }
+        }
+        return false;
+    } 
+
+    function getOptionsCount() public view returns (uint) {
+        return options.length;
+    }
+
     function startBidding() public {
         require(!biddingStarted, "Bidding has already started");
         bids.length = options.length;
